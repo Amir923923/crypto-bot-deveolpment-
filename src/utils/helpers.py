@@ -91,7 +91,11 @@ def parse_timeframe(timeframe: str) -> int:
     if len(timeframe) < 2:
         raise ValueError(f"Invalid timeframe: {timeframe}")
     
-    value = int(timeframe[:-1])
+    try:
+        value = int(timeframe[:-1])
+    except ValueError:
+        raise ValueError(f"Invalid timeframe format: {timeframe}. Expected format like '1h', '5m', etc.")
+    
     unit = timeframe[-1]
     
     if unit not in timeframe_map:

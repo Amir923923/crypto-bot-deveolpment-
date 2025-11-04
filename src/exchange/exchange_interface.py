@@ -42,8 +42,10 @@ class ExchangeInterface:
                 config['secret'] = api_secret
             
             # Enable testnet if specified
-            if testnet and hasattr(exchange_class, 'has') and exchange_class.has.get('sandbox'):
-                config['sandbox'] = True
+            if testnet:
+                if hasattr(exchange_class, 'has') and isinstance(exchange_class.has, dict):
+                    if exchange_class.has.get('sandbox'):
+                        config['sandbox'] = True
             
             self.exchange = exchange_class(config)
             logger.info(f"Connected to {exchange_name} exchange (testnet={testnet})")

@@ -31,6 +31,10 @@ def generate_sample_data(periods=200, trend='bullish', volatility=0.02):
     Returns:
         DataFrame with OHLCV data
     """
+    # Constants for trend calculation
+    SIDEWAYS_CYCLES = 4
+    SIDEWAYS_AMPLITUDE = 5
+    
     np.random.seed(42)
     
     # Generate base price trend
@@ -39,7 +43,7 @@ def generate_sample_data(periods=200, trend='bullish', volatility=0.02):
     elif trend == 'bearish':
         trend_component = np.linspace(0, -20, periods)
     else:  # sideways
-        trend_component = np.sin(np.linspace(0, 4*np.pi, periods)) * 5
+        trend_component = np.sin(np.linspace(0, SIDEWAYS_CYCLES * np.pi, periods)) * SIDEWAYS_AMPLITUDE
     
     # Generate random walk
     random_walk = np.cumsum(np.random.randn(periods) * volatility)
