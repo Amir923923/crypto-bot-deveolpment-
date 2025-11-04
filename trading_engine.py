@@ -64,7 +64,7 @@ class TradingEngine:
         
         # Recalculate profit with current prices
         gross_profit = ((current_sell_price - current_buy_price) / current_buy_price) * 100
-        net_profit = gross_profit - 0.2  # Account for fees
+        net_profit = gross_profit - Config.TRADING_FEE_PERCENTAGE
         
         if net_profit < Config.MIN_PROFIT_PERCENTAGE:
             logger.warning(f"Profit dropped below threshold: {net_profit:.2f}%")
@@ -132,8 +132,28 @@ class TradingEngine:
         )
         
         if not sell_order:
-            logger.error("Sell order failed - manual intervention may be required!")
-            # Note: In production, implement proper error handling and rollback
+            logger.critical("=" * 70)
+            logger.critical("CRITICAL: Sell order failed - MANUAL INTERVENTION REQUIRED!")
+            logger.critical(f"Buy order executed: {buy_order['id']} on {opportunity.buy_exchange}")
+            logger.critical(f"Quantity held: {quantity:.8f} {opportunity.symbol}")
+            logger.critical("Action needed: Manually execute sell order to close position")
+            logger.critical("=" * 70)
+            
+            # Log details for recovery
+            self.trade_history.append({
+                'opportunity': opportunity,
+                'quantity': quantity,
+                'buy_order': buy_order,
+                'sell_order': None,
+                'status': 'incomplete_requires_manual_intervention',
+                'timestamp': time.time(),
+                'recovery_info': {
+                    'exchange': opportunity.sell_exchange,
+                    'symbol': opportunity.symbol,
+                    'quantity': quantity,
+                    'action': 'SELL'
+                }
+            })
             return False
         
         logger.info("Arbitrage executed successfully!")

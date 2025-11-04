@@ -58,11 +58,8 @@ class ArbitrageDetector:
         if buy_price <= 0:
             return 0.0
         
-        # Assume average trading fee of 0.1% per transaction (0.2% total)
-        fee_percentage = 0.2
-        
         gross_profit = ((sell_price - buy_price) / buy_price) * 100
-        net_profit = gross_profit - fee_percentage
+        net_profit = gross_profit - Config.TRADING_FEE_PERCENTAGE
         
         return net_profit
     

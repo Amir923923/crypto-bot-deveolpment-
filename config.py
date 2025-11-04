@@ -29,6 +29,7 @@ class Config:
     # Risk Management
     MAX_SLIPPAGE_PERCENTAGE = 0.3
     ORDER_TIMEOUT_SECONDS = 30
+    TRADING_FEE_PERCENTAGE = 0.2  # Estimated total fee (0.1% per trade)
     
     @classmethod
     def validate(cls):
