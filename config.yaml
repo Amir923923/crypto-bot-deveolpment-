@@ -1,0 +1,54 @@
+trading:
+  mode: paper  # paper or live
+  base_currency: USDT
+  symbols:
+    - BTC/USDT
+    - ETH/USDT
+    - BNB/USDT
+  
+  # Trade sizing
+  trade_amount: 100  # Amount in base currency per trade
+  max_positions: 3   # Maximum concurrent positions
+  
+  # Risk management
+  stop_loss_percentage: 2.0    # Stop loss at 2% below entry
+  take_profit_percentage: 5.0   # Take profit at 5% above entry
+  max_daily_loss: 10.0          # Max 10% loss per day
+  
+  # Trading timeframes
+  timeframe: 1h  # 1m, 5m, 15m, 1h, 4h, 1d
+  lookback_periods: 100  # Number of candles to analyze
+
+strategies:
+  # Enable/disable strategies
+  moving_average:
+    enabled: true
+    fast_period: 10
+    slow_period: 30
+    
+  rsi:
+    enabled: true
+    period: 14
+    oversold: 30
+    overbought: 70
+    
+  bollinger_bands:
+    enabled: true
+    period: 20
+    std_dev: 2
+
+exchange:
+  name: binance
+  testnet: true  # Use testnet for paper trading
+  rate_limit: true
+  timeout: 30000
+
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR
+  console: true
+  file: true
+  file_path: logs/crypto_bot.log
+  
+database:
+  url: sqlite:///data/trading.db
+  echo: false
