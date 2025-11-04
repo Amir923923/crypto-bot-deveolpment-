@@ -24,4 +24,4 @@ backtrader>=1.9.78
 pyyaml>=6.0
 
 # Async support
-aiohttp>=3.8.0
+aiohttp>=3.9.4

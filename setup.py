@@ -43,7 +43,7 @@ setup(
         "pytest-asyncio>=0.21.0",
         "backtrader>=1.9.78",
         "pyyaml>=6.0",
-        "aiohttp>=3.8.0",
+        "aiohttp>=3.9.4",
     ],
     entry_points={
         "console_scripts": [
